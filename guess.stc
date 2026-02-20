@@ -1,0 +1,51 @@
+%% Number Guessing Game in STOICAL
+%% A simple game where you guess a number between 1 and 100
+
+% Generate the secret number (1-100)
+rand 100 mod 1+ 'secret variable
+
+% Counter for number of guesses
+0 'guesses variable
+
+% Define helper words
+'too-high : 
+    "Too high! Try a smaller number." ^ 
+	= cr 
+;
+
+'too-low : 
+    "Too low! Try a bigger number." ^ 
+	= cr 
+;
+
+'correct : 
+    cr
+    "*** CORRECT! ***" ^
+	 = cr
+    "You guessed the number in" ^
+	 = space
+    guesses @ = 
+    guesses @ 1 eq if
+        'guess! =
+    else
+        'guesses! =
+    then
+    cr
+;
+
+% Process a single guess
+'check-guess :
+    guesses 1+!                     % Increment guess counter
+    
+    dup secret @ eq if              % Check if correct
+        drop correct
+        true                        % Signal game over
+    else
+       secret @ le if
+         too-low
+       else
+         too-high
+       then 	
+    then
+;
+
